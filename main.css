@@ -83,6 +83,7 @@ html, body, section {
     background-image: url(images/mainbackground.png);
     overflow-y: scroll;
     padding: 1em;
+    background-color: #CCC5B8;
 }
 
 
@@ -91,7 +92,11 @@ html, body, section {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: auto;
-  grid-gap: 3rem;
+  grid-column-gap: 2.2rem;
+  grid-row-gap: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: .5rem;
 }
 
 .flip-card {
