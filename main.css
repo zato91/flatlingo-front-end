@@ -8,9 +8,8 @@ html, body, section {
     font-family: 'Roboto Condensed', sans-serif;
     /* text-transform: uppercase; */
   }
- 
-#main {
 
+#main {
     display: flex;
     
 }
@@ -22,18 +21,18 @@ html, body, section {
 }
 
 #logo-container{
-     height: 25%;
-     
+  height: 25%;
+
 }
 
 #login-container {
     height: 20%;
- 
+
 }
 
 #deck-container {
     height: 79%;
- 
+
 }
 
 
@@ -50,8 +49,6 @@ html, body, section {
     border: 3px solid #7300d7;
     border-radius: 50px;
     color: #a98018;
-
-   
     cursor: pointer;
     display: inline-block;
   }
