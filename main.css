@@ -1,9 +1,12 @@
+@import: url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
 html, body, section {
     height: 100%;
   }
 
   body{
     margin: 0;
+    font-family: 'Roboto Condensed', sans-serif;
+    /* text-transform: uppercase; */
   }
  
 #main {
@@ -14,13 +17,74 @@ html, body, section {
 
 #left-container {
     flex: 0.3;
-    padding: 1rem;
-    background-color: red;
+   
+   
+}
+
+#logo-container{
+     height: 25%;
+     
+}
+
+#login-container {
+    height: 20%;
+ 
+}
+
+#deck-container {
+    height: 79%;
+ 
+}
+
+
+
+
+.button {
+    width: 170px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    margin-top: 30px;
+    font-weight: 600;
+    margin-left: 25%;
+    border: 3px solid #7300d7;
+    border-radius: 50px;
+    color: #a98018;
+
+   
+    cursor: pointer;
+    display: inline-block;
+  }
+  
+  .button-1 {
+  
+    border: 3px solid #7300d7;
+    border-radius: 50px;
+    color: #a98018;
+  }
+  .button-1:hover {
+    box-shadow: 0 0 10px 0 #7300d7 inset, 0 0 20px 2px #7300d7;
+    border: 3px solid #3a016c;
+  }
+
+#logo-container > img{
+    height: 100%;
+    width: 100%;
+} 
+
+#middle-container{
+    height: 60%;
+    
+}
+
+#bottom-container {
+    height: 15%;
 }
 
 
 #right-container {
     flex: 1;
-    padding: 1rem;
-    background-color: blue;
+    background-image: url(img/library.jpg);
+    background-repeat: round;
+    opacity: 0.6;
 }
