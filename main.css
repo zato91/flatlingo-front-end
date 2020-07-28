@@ -116,9 +116,9 @@ html, body, section {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
-.flip-card:hover .flip-card-inner {
+/* .flip-card:hover .flip-card-inner {
   transform: rotateY(180deg);
-}
+} */
 
 .flip-card-front, .flip-card-back {
   position: absolute;
@@ -151,36 +151,4 @@ html, body, section {
   background-image: url(images/imageedit_12_5643738717.png);
   background-size: contain;
   background-position-y: center;
-}
-
-.card {
-  /* Box Shadow Stuff that doesn't work */
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  border-radius: 5px;
-  /* Background Stuff */
-  background-color: #361264;
-  background-size: contain;
-  background-position-y: center;
-  background-image: url(images/imageedit_12_5643738717.png);
-  /* Text Stuff */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 300px;
-  color: #c28e37;
-  font-size: 25px;
-  /* border: 5px;
-  border-color: #c28e37; */
-  
-}
-
-/* On mouse-over, add a deeper shadow */
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-/* Add some padding inside the card container */
-.word-container {
-  padding: 2px 16px;
 }
