@@ -1,4 +1,4 @@
-@import: url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
+
 html, body, section {
     height: 100%;
   }
@@ -133,7 +133,9 @@ html, body, section {
   justify-content: center;
   align-items: center;
   color: #c28e37;
-  font-size: 25px;
+  font-size: 20px;
+  letter-spacing: .1em;
+  font-family: 'Pridi', serif;
 }
 
 .flip-card-back {
