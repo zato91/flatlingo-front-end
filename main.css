@@ -148,3 +148,92 @@ html, body, section {
   background-size: contain;
   background-position-y: center;
 }
+
+/***************************************** MODAL STYLING *****************************************/
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #faebd1;
+  margin: 15% auto; /* 15% from the top and centered */
+  border: 1px solid #888;
+  border-radius: 5px;
+  width: 30%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  position: relative;
+  padding-right: 5px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  background-color: #674b8b;
+  text-align: center;
+
+}
+
+.modal-header h2 {
+  font-family: 'Pridi', serif;
+  font-size: 20px;
+  color: #cfa04f;
+  margin: 0;
+}
+
+.new-item-form {
+  font-family: 'Roboto', sans-serif;
+  color: #674b8b;
+  padding: 10px;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+input[type=submit] {
+  width: 170px;
+  margin-top: 12px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  font-weight: 600;
+  border: 3px solid #7300d7;
+  border-radius: 50px;
+  color: #a98018;
+  cursor: pointer;
+  display: inline-block;
+}
+
+input[type=text] {
+  padding: 5px;
+  width: 75%;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+input[type=text]:focus {
+  background-color: #eee3fc;
+  outline: none;
+}

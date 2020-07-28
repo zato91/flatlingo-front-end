@@ -12,7 +12,7 @@
         <section id="main">
             <div id="left-container" class="left-container">
                 <div id="logo-container">
-                    <img src="images/purpleLogo.png" alt="logo">
+                    <img src="images/FlatlingoLogo.png" alt="logo">
                 </div>
                 <div id="middle-container">
                     <div id="login-container">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div id="bottom-container">
-                    <div class="button ">Create deck</div>
+                    <div id="create-deck-button" class="button ">Create deck</div>
                 </div>
             </div>
             <div id="right-container" class="right-container">
@@ -194,5 +194,17 @@
                 </div>
             </div>
         </section>
+        <!-- **********************CREATE-DECK-MODAL**************************** -->
+        <div id="create-deck-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header"><h2>New Deck</h2><span class="close">&times;</span></div>
+                <form class="new-item-form">
+                    <label for="name">Name:</label>
+                    <input type="text"><br>
+                    <input type="submit" value="Create Deck">
+                </form>
+                
+            </div>
+        </div>
     </body>
 </html>
