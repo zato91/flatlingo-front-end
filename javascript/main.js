@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     cardFronts.forEach(FlipFunction)
     cardBacks.forEach(BackFlipFunction)
 
-    // CREATE DECK MODAL ISH
+    // CREATE DECK MODAL
     const createDeckButton = document.getElementById("create-deck-button");
     const createDeckModal = document.getElementById("create-deck-modal");
     const closeSpan = document.getElementsByClassName("close")[0];
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     // Render Card Function
 
 const renderCards = (deck) => {
- fetch(`${baseURL}decks/${deck.id}`)
+    fetch(`${baseURL}decks/${deck.id}`)
     .then(resp => resp.json())
     .then(deck => { 
         cardContainer.innerHTML = ""
@@ -153,13 +153,13 @@ function renderNewCard(){
     divNewCard.className = "flip-card";
     divNewCard.innerHTML = `
         <div id="new-card-inner" class="flip-card-inner">
-         <div id="new-card-front" class="flip-card-front">
+        <div id="new-card-front" class="flip-card-front">
                 <h1>Create New Card</h1>
-         </div>
+        </div>
             <div id="new-card-back" class="flip-card-back">
             </div>
-       </div>`;
-     cardContain.appendChild(divNewCard);
+        </div>`;
+    cardContain.appendChild(divNewCard);
 
     const newCardFront = document.getElementById("new-card-front");
     const newCardModal = document.getElementById("new-card-modal");
@@ -213,7 +213,6 @@ function createCard(form){
         "deck_id": currentDeck
     }
 
-
     const option = {
         method: "POST",
         headers: {
@@ -229,5 +228,4 @@ function createCard(form){
         console.log(card);
         form.reset()
     })
-
 }
