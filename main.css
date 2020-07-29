@@ -7,6 +7,7 @@ html, body, section {
     margin: 0;
     font-family: 'Roboto Condensed', sans-serif;
     /* text-transform: uppercase; */
+    background-image: url(images/mainbackground.png);
   }
 
 #main {
@@ -20,9 +21,9 @@ html, body, section {
     display: flex;
     flex-direction: column;
     text-align: center;
-    border-right: 1px solid #c28e37;
-    background-image: url(images/left_container_img.png);
-    background-color: #857a95;
+    border-right: 1.5px groove #c28e37;
+    /* background-image: url(images/left_container_img.png); */
+    background-color: #2f1f4b66;
 }
 
 #logo-container{
@@ -31,15 +32,14 @@ html, body, section {
   flex-direction: column;
   text-align: center;
   align-items: center;
-  background-color: #361264;
   font-family: 'Pridi', serif;
   color: #c28e37;
-  border-bottom: 1px solid #c28e37;
+  border-bottom: 1px groove #c28e37;
 
 }
 
 #logo-container > img{
-  width: 60%;
+  width: 55%;
   margin-top: 12px;
   
 } 
@@ -70,7 +70,7 @@ html, body, section {
     text-align: center;
     margin-top: 20px;
     font-weight: 600;
-    border: 3px solid #67409b;
+    border: 3px groove #f5d295;
     background-color: #f5d295;
     border-radius: 10px;
     color: #67409b;
@@ -80,7 +80,7 @@ html, body, section {
   
   .button:hover, input[type=submit]:hover {
     background-color: #67409b;
-    border: 3px solid #f5d295;
+    border: 3px groove #67409b;
     color: #f5d295;
     /* box-shadow: 0 0 10px 0 #7300d7 inset, 0 0 20px 2px #7300d7;
     border: 3px solid #3a016c; */
@@ -190,7 +190,7 @@ html, body, section {
 .modal-content {
   background-color: #faebd1;
   margin: 15% auto; /* 15% from the top and centered */
-  border: 1px solid #888;
+  border: 2px groove #674b8b;
   border-radius: 5px;
   width: 30%; /* Could be more or less, depending on screen size */
 }
@@ -243,6 +243,11 @@ input[type=text] {
   width: 75%;
   margin: 8px 0;
   box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px groove #674b8b;
+  font-family: 'Roboto', sans-serif;
+  color: #361264;
+  background-color: #f8dcac;
 }
 
 input[type=text]:focus {
