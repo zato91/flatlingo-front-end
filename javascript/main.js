@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     // Handling Login and Links
     const BASE_URL = "http://localhost:3000/";
     const User1_URL = `${BASE_URL}/users/1`;
-    const DECK_URL = 'http://localhost:3000/decks/';
+    
     const createButton =  document.querySelector('.button.create');
 
     // Fetching User Decks
@@ -29,33 +29,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
     }
 
     
-    // Create new Deck
-     function fetchCreateDeck(userInput){
-        let id = document.querySelector('.buttonId').dataset.id
-        id = parseInt(id, 10)
-        
-
-        const options = {
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-                "accept": "application/json",
-            },
-            body: JSON.stringify({
-                name: userInput,
-                user_id: id
-            })           
-
-         }
-        
-        fetch("http://localhost:3000/decks", options)
-            .then(response => response.json())
-            .then(deck => renderDeck(deck));
-   
-     }
-    
-
-
     fetchUserDeck();
 
     // Handling card flipping
@@ -74,13 +47,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
     createDeckButton.addEventListener("click", (e)=>{
         createDeckModal.style.display = "block";
-
-        const sumbitDeck = document.querySelector('.new-item-form')[1];
-
-        sumbitDeck.addEventListener('click', (e)=>{
-            // console.log(e)
-        let userInput = document.querySelector('.new-item-form')[0].value;
-        fetchCreateDeck(userInput);
             
         })
 
@@ -114,7 +80,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
         }
         fetch(`${baseURL}decks`, deckConfig)
         .then(resp => resp.json())
-        .then(deck => {
+        .then(deck => { 
             let deckContainer = document.getElementById("deck-container")
             let deckDiv = document.createElement("div")
             deckDiv.className = "button"
@@ -129,8 +95,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
         
     })
 
-    
-})
 
 
 // CardFlipFunctions
