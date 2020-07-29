@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
         sumbitDeck.addEventListener('click', (e)=>{
             // console.log(e)
         let userInput = document.querySelector('.new-item-form')[0].value;
-        console.log(userInput);
+        fetchCreateDeck(userInput);
             
         })
 
