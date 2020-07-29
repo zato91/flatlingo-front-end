@@ -133,6 +133,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
         cardContainer.prepend(cardDiv);
         FlipFunction(cardFront);
         BackFlipFunction(cardBack);
+        cardDiv.scrollIntoView()
     }
 
     function renderNewCard(){
