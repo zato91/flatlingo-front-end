@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", ()=> {
     // Handling card flipping
     const cardFronts = document.querySelectorAll(".flip-card-front");
     const cardBacks = document.querySelectorAll(".flip-card-back");
+    const cardContainer = document.querySelector(".card-container")
+
     
 
     cardFronts.forEach(FlipFunction)
@@ -38,6 +40,9 @@ document.addEventListener("DOMContentLoaded", ()=> {
         divDeck.dataset.user = deck.user_id
         divDeck.innerText = deck.name;
         divDeckContainer.append(divDeck);
+        divDeck.addEventListener("click", (e) => {
+            renderCards(deck)
+        })
     }
 
     newDeckForm.addEventListener("submit", (e)=>{
@@ -102,6 +107,64 @@ document.addEventListener("DOMContentLoaded", ()=> {
         })
 
     })
+
+    // NEW CARD MODAL
+    const newCardFront = document.getElementById("new-card-front");
+    const newCardModal = document.getElementById("new-card-modal");
+    const closeNewCardSpan = document.getElementsByClassName("close")[2];
+    const newCardForm = document.getElementById("new-card-form");
+    const newCardInner = document.getElementById("new-card-inner")
+
+    newCardFront.addEventListener("click", (e)=>{
+        newCardModal.style.display = "block";
+            
+    })
+
+    closeNewCardSpan.addEventListener("click", (e)=>{
+        newCardModal.style.display = "none";
+    })
+    document.addEventListener("click", (e)=>{
+        if(e.target == newCardModal){
+            newCardModal.style.display = "none";
+            newCardForm.reset()
+            newCardInner.style.transform = ""
+        }
+    })
+
+
+    // Render Card Function
+
+const renderCards = (deck) => {
+    
+    fetch(`${baseURL}decks/${deck.id}`)
+    .then(resp => resp.json())
+    .then(deck => {
+        cardContainer.innerHTML = ""
+        deck.cards.forEach(renderCard)
+    })
+}
+
+const renderCard = (card) => {
+    console.log(card)
+    const cardDiv = document.createElement("div");
+    cardDiv.className = "flip-card";
+    const cardInner = document.createElement("div");
+    cardInner.className = "flip-card-inner";
+    cardDiv.appendChild(cardInner);
+    const cardFront = document.createElement("div");
+    cardFront.className = "flip-card-front";
+    cardFront.innerHTML = `<h1>${card.front_word}</h1>`;
+    cardInner.appendChild(cardFront);
+    const cardBack = document.createElement("div");
+    cardBack.className = "flip-card-back";
+    cardBack.innerHTML = `<h1>${card.front_word}</h1>
+    <p>Definition: ${card.back_definition}</p>
+    <p>Notes: ${card.back_notes}</p>`
+    cardInner.appendChild(cardBack);
+    cardContainer.prepend(cardDiv);
+    FlipFunction(cardFront);
+    BackFlipFunction(cardBack);
+}
 
 
 })

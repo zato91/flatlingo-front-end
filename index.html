@@ -21,9 +21,7 @@
                         <div id="login-button" class="button button-1">Log in</div>
                         <p id="welcome" style="text-align: center;display: none;"></p>
                     </div>
-                
                     <div id="deck-container">
-                        <div class="button">Ruby</div>
                     </div>
                 </div>
                 <div id="bottom-container">
@@ -189,7 +187,15 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <div id="new-card" class="flip-card">  
+                        <div id="new-card-inner" class="flip-card-inner">
+                            <div id="new-card-front" class="flip-card-front">
+                                <h1>Create New Card</h1>
+                            </div>
+                            <div id="new-card-back" class="flip-card-back">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -212,6 +218,21 @@
                 <form id="login-form" class="new-item-form">
                     <label for="username">Username:</label>
                     <input name="username" type="text"><br>
+                    <input type="submit" value="Login">
+                </form>
+            </div>
+        </div>
+        <!-- **********************LOGIN-MODAL**************************** -->
+        <div id="new-card-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header"><h2>New Card</h2><span class="close">&times;</span></div>
+                <form id="new-card-form" class="new-item-form">
+                    <label for="word">Word:</label>
+                    <input name="word" type="text"><br>
+                    <label for="definition">Definition:</label>
+                    <input name="definition" type="text"><br>
+                    <label for="notes">Notes:</label>
+                    <input name="notes" type="text"><br>
                     <input type="submit" value="Login">
                 </form>
             </div>

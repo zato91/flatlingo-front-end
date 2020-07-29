@@ -55,6 +55,12 @@ html, body, section {
     text-align: center;
 }
 
+#login-container p {
+  color: #361264;
+  font-family: "Roboto";
+  font-size: 18px;
+}
+
 #deck-container {
     height: 79%;
     display: flex;
