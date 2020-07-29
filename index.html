@@ -4,6 +4,7 @@
     <head>
         <title>FlatLingo</title>
         <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+        <link rel="icon" type="image/png" href="images/transparent_logo.png">
         <script src="javascript/main.js"></script>
         <link href="https://fonts.googleapis.com/css2?family=Pridi:wght@400;600&family=Roboto&family=Roboto+Condensed&display=swap" rel="stylesheet">
     </head>
@@ -12,7 +13,8 @@
         <section id="main">
             <div id="left-container" class="left-container">
                 <div id="logo-container">
-                    <img src="images/FlatlingoLogo.png" alt="logo">
+                    <img src="images/transparent_logo.png" alt="logo">
+                    <h1>FlatLingo</h1>
                 </div>
                 <div id="middle-container">
                     <div id="login-container">
@@ -21,7 +23,7 @@
                     </div>
                 
                     <div id="deck-container">
-                        <div class="button ">Ruby</div>
+                        <div class="button">Ruby</div>
                     </div>
                 </div>
                 <div id="bottom-container">
@@ -195,9 +197,9 @@
         <div id="create-deck-modal" class="modal">
             <div class="modal-content">
                 <div class="modal-header"><h2>New Deck</h2><span class="close">&times;</span></div>
-                <form class="new-item-form">
+                <form id="new-deck-form" class="new-item-form">
                     <label for="name">Name:</label>
-                    <input type="text"><br>
+                    <input name="name" type="text"><br>
                     <input type="submit" value="Create Deck">
                 </form>
                 
