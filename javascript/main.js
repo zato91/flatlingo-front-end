@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     document.addEventListener("click", (e)=>{
         if(e.target == createDeckModal){
             createDeckModal.style.display = "none";
+            newDeckForm.reset()
         }
     })
 
@@ -54,11 +55,13 @@ document.addEventListener("DOMContentLoaded", ()=> {
         .then(deck => {
             let deckContainer = document.getElementById("deck-container")
             let deckDiv = document.createElement("div")
-            deckDiv.className = "button "
+            deckDiv.className = "button"
             deckDiv.dataset.id = deck.id
             deckDiv.dataset.user = deck.user_id
             deckDiv.innerText = deck.name
             deckContainer.appendChild(deckDiv)
+            newDeckForm.reset()
+            createDeckModal.style.display = "none";
         })
 
         
