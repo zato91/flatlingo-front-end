@@ -1,36 +1,6 @@
 let currentUserId = 4
-baseURL = "http://localhost:3000/"
+const baseURL = "http://localhost:3000/"
 document.addEventListener("DOMContentLoaded", ()=> {
-    // Handling Login and Links
-    const BASE_URL = "http://localhost:3000/";
-    const User1_URL = `${BASE_URL}/users/1`;
-    
-    const createButton =  document.querySelector('.button.create');
-
-    // Fetching User Decks
-    function fetchUserDeck(){
-        fetch(User1_URL )
-            .then(response => response.json())
-            .then(user => user.decks.forEach(deck => { renderDeck(deck) }));
-
-    }
-
-    
-    // Create Deck Div and render in web page
-    function renderDeck(deck){
-        const divDeckContainer = document.getElementById('deck-container');
-       
-        let divDeck = document.createElement('div');
-        divDeck.classList += 'button buttonId';
-        divDeck.dataset.id = deck.user_id;
-        divDeck.innerText = deck.name;
-        divDeckContainer.append(divDeck);
-       
-    }
-
-    
-    fetchUserDeck();
-
     // Handling card flipping
     const cardFronts = document.querySelectorAll(".flip-card-front");
     const cardBacks = document.querySelectorAll(".flip-card-back");
@@ -50,8 +20,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
             
         })
 
-    })
-
     closeSpan.addEventListener("click", (e)=>{
         createDeckModal.style.display = "none";
     })
@@ -61,6 +29,16 @@ document.addEventListener("DOMContentLoaded", ()=> {
             newDeckForm.reset()
         }
     })
+
+    function renderDeck(deck){
+        const divDeckContainer = document.getElementById('deck-container');
+        let divDeck = document.createElement('div');
+        divDeck.classList += 'button buttonId';
+        divDeck.dataset.id = deck.id
+        divDeck.dataset.user = deck.user_id
+        divDeck.innerText = deck.name;
+        divDeckContainer.append(divDeck);
+    }
 
     newDeckForm.addEventListener("submit", (e)=>{
         e.preventDefault()
@@ -81,20 +59,52 @@ document.addEventListener("DOMContentLoaded", ()=> {
         fetch(`${baseURL}decks`, deckConfig)
         .then(resp => resp.json())
         .then(deck => { 
-            let deckContainer = document.getElementById("deck-container")
-            let deckDiv = document.createElement("div")
-            deckDiv.className = "button"
-            deckDiv.dataset.id = deck.id
-            deckDiv.dataset.user = deck.user_id
-            deckDiv.innerText = deck.name
-            deckContainer.appendChild(deckDiv)
+            renderDeck(deck)
             newDeckForm.reset()
             createDeckModal.style.display = "none";
         })
-
-        
     })
 
+    // LOGIN MODAL STUFF
+    const loginButton = document.getElementById("login-button");
+    const loginModal = document.getElementById("login-modal");
+    const closeLoginSpan = document.getElementsByClassName("close")[1];
+    const loginForm = document.getElementById("login-form");
+    const welcomeP = document.getElementById("welcome")
+
+    loginButton.addEventListener("click", (e)=>{
+        loginModal.style.display = "block";
+            
+    })
+
+    closeLoginSpan.addEventListener("click", (e)=>{
+        loginModal.style.display = "none";
+    })
+    document.addEventListener("click", (e)=>{
+        if(e.target == loginModal){
+            loginModal.style.display = "none";
+            loginForm.reset()
+        }
+    })
+
+    loginForm.addEventListener("submit", (e)=>{
+        e.preventDefault();
+        fetch(`${baseURL}/users/login/${e.target.username.value}`)
+        .then(resp => resp.json())
+        .then(user => {
+            user.decks.forEach(deck => { renderDeck(deck) });
+            currentUserId = user.id;
+            loginButton.style.display = "none";
+            welcomeP.style.display = "inline-block";
+            welcomeP.innerHTML = `Hello ${user.username}!<br>What would you like to learn today?`;
+            loginModal.style.display = "none";
+            loginForm.reset();
+        })
+
+    })
+
+
+})
 
 
 // CardFlipFunctions
@@ -109,3 +119,5 @@ const BackFlipFunction = (cardBack) => {
         e.target.closest(".flip-card-inner").style.transform = "";
     })
 }
+
+

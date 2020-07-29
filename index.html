@@ -18,8 +18,8 @@
                 </div>
                 <div id="middle-container">
                     <div id="login-container">
-                        <div class="button button-1">Log in</div>
-                        <p style="text-align: center;display: none;">Hello NAME !<br>What would you like to learn today? </p>
+                        <div id="login-button" class="button button-1">Log in</div>
+                        <p id="welcome" style="text-align: center;display: none;"></p>
                     </div>
                 
                     <div id="deck-container">
@@ -205,5 +205,17 @@
                 
             </div>
         </div>
+        <!-- **********************LOGIN-MODAL**************************** -->
+        <div id="login-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header"><h2>Login</h2><span class="close">&times;</span></div>
+                <form id="login-form" class="new-item-form">
+                    <label for="username">Username:</label>
+                    <input name="username" type="text"><br>
+                    <input type="submit" value="Login">
+                </form>
+            </div>
+        </div>
+
     </body>
 </html>
