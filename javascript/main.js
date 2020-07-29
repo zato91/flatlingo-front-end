@@ -1,3 +1,5 @@
+let currentUserId = 4
+baseURL = "http://localhost:3000/"
 document.addEventListener("DOMContentLoaded", ()=> {
     // Handling Login and Links
 
@@ -16,6 +18,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     const createDeckButton = document.getElementById("create-deck-button");
     const createDeckModal = document.getElementById("create-deck-modal");
     const closeSpan = document.getElementsByClassName("close")[0];
+    const newDeckForm = document.getElementById("new-deck-form");
 
     createDeckButton.addEventListener("click", (e)=>{
         createDeckModal.style.display = "block";
@@ -29,6 +32,39 @@ document.addEventListener("DOMContentLoaded", ()=> {
             createDeckModal.style.display = "none";
         }
     })
+
+    newDeckForm.addEventListener("submit", (e)=>{
+        e.preventDefault()
+        // console.log(currentUserId)
+        // console.dir(e.target.name.value)
+        let deckObj = {
+            "name": e.target.name.value,
+            "user_id": currentUserId
+        }
+        let deckConfig = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(deckObj)
+        }
+        fetch(`${baseURL}decks`, deckConfig)
+        .then(resp => resp.json())
+        .then(deck => {
+            let deckContainer = document.getElementById("deck-container")
+            let deckDiv = document.createElement("div")
+            deckDiv.className = "button "
+            deckDiv.dataset.id = deck.id
+            deckDiv.dataset.user = deck.user_id
+            deckDiv.innerText = deck.name
+            deckContainer.appendChild(deckDiv)
+        })
+
+        
+    })
+
+    
 })
 
 
@@ -42,6 +78,5 @@ const FlipFunction = (cardFront) => {
 const BackFlipFunction = (cardBack) => {
     cardBack.addEventListener("click", (e) => {
         e.target.closest(".flip-card-inner").style.transform = "";
-        
     })
 }
