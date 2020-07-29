@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", ()=> {
     // ********************* CardFlipping ************************
     const cardFronts = document.querySelectorAll(".flip-card-front");
     const cardBacks = document.querySelectorAll(".flip-card-back");
-    const cardContainer = document.querySelector(".card-container")
+    const cardContainer = document.querySelector(".card-container");
+    const divDeckContainer = document.getElementById('deck-container');
     // Adds Flip functions to both back and front of cards
     cardFronts.forEach(FlipFunction)
     cardBacks.forEach(BackFlipFunction)
@@ -32,18 +33,35 @@ document.addEventListener("DOMContentLoaded", ()=> {
     // ************************* NEW DECK CREATION AND RENDERING **********************
 
     function renderDeck(deck){
-        const divDeckContainer = document.getElementById('deck-container');
         let divDeck = document.createElement('div');
         divDeck.classList += 'button buttonId';
         divDeck.dataset.id = deck.id;
         divDeck.dataset.user = deck.user_id;
         divDeck.innerText = deck.name;
+
         divDeckContainer.append(divDeck);
         divDeck.addEventListener("click", (e) => {
             renderCards(deck)
             currentDeck = deck.id;
+             deckOptions(divDeck);
         })
     }
+
+
+    function  deckOptions(divDeck){
+        // console.dir(divDeck)
+        divDeckContainer.children.style.display = "none";
+        divDeck.style.display = "inline-block"
+        
+
+        let buttonBack = document.createElement('div');
+        buttonBack.className = "button";
+        buttonBack.innerText = "All Decks";
+        divDeckContainer.append(buttonBack);
+       
+
+    }
+
     // ************************** ADDS FETCH REQUEST TO CREATE NEW DECK ***************
     newDeckForm.addEventListener("submit", (e)=>{
         e.preventDefault()
