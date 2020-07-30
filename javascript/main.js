@@ -79,12 +79,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
             deleteDeckButton.remove()
             buttonBack.remove()
             cardContainer.innerHTML = ""
-        })
-
-
-
-
-        
+        })   
     }
 
     const toggleDeckContainerDisplay = (divDeck) => {
@@ -151,7 +146,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
     const loginForm = document.getElementById("login-form");
     const welcomeP = document.getElementById("welcome");
     const newCardForm = document.getElementById("new-card-form");
-    
 
     loginButton.addEventListener("click", (e)=>{
         toggleModalDisplay(loginModal);       
@@ -178,41 +172,41 @@ document.addEventListener("DOMContentLoaded", ()=> {
             welcomeP.style.display = "inline-block";
             welcomeP.innerHTML = `Hello ${user.username}!<br>What would you like to learn today?`;
             toggleModalDisplay(loginModal, loginForm);
+            cardContainer.innerHTML = "";
         })
     })
-// **********************CardFlipFunctions************************
-const FlipFunction = (cardFront) => {
-    cardFront.addEventListener("click", (e) => {
-        //e.target.parentElement.style.transform = "rotateY(180deg)";
-        e.target.closest(".flip-card-inner").style.transform = "rotateY(180deg)";
-    })
-}
-const BackFlipFunction = (cardBack) => {
-    const editCardModal = document.getElementById("edit-card-modal");
-    
-    cardBack.addEventListener("click", (e) => {
-        const card = e.target.closest(".flip-card")
-        if (e.target.dataset.function === "delete"){
-            deleteCard(e.target)
-        }
-        else if (e.target.dataset.function === "edit"){
-            toggleModalDisplay(editCardModal)
-            currentCard = e.target.dataset.id
-            const editCardform = document.getElementById("edit-card-form");
+    // **********************CardFlipFunctions************************
+    const FlipFunction = (cardFront) => {
+        cardFront.addEventListener("click", (e) => {
+            //e.target.parentElement.style.transform = "rotateY(180deg)";
+            e.target.closest(".flip-card-inner").style.transform = "rotateY(180deg)";
+        })
+    }
+    const BackFlipFunction = (cardBack) => {
+        
+        cardBack.addEventListener("click", (e) => {
+            const card = e.target.closest(".flip-card")
+            if (e.target.dataset.function === "delete"){
+                deleteCard(e.target)
+            }
+            else if (e.target.dataset.function === "edit"){
+                toggleModalDisplay(editCardModal)
+                currentCard = e.target.dataset.id
+                
 
-            editCardform.addEventListener('submit', (e) => {
-                e.preventDefault();
-                editCardModalHandler(e.target, currentCard, card)
-                toggleModalDisplay(editCardModal);
-            })
+                editCardform.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    editCardModalHandler(e.target, currentCard, card)
+                    toggleModalDisplay(editCardModal);
+                })
+                
             
-           
-        }
-        else{
-        e.target.closest(".flip-card-inner").style.transform = "";
-        }
-    })
-}
+            }
+            else{
+            e.target.closest(".flip-card-inner").style.transform = "";
+            }
+        })
+    }
     // ********************** Render Cards Functions **************************************
     const renderCards = (deck) => {
         fetch(`${baseURL}decks/${deck.id}`)
@@ -269,7 +263,7 @@ const BackFlipFunction = (cardBack) => {
     
         const newCardFront = document.getElementById("new-card-front");
         const newCardModal = document.getElementById("new-card-modal");
-        const closeNewCardSpan = document.getElementsByClassName("close")[2];
+        const closeNewCardSpan = document.getElementsByClassName("close")[3];
         const newCardInner = document.getElementById("new-card-inner");
         FlipFunction(newCardFront)
         newCardFront.addEventListener("click", (e)=>{
@@ -277,7 +271,7 @@ const BackFlipFunction = (cardBack) => {
         })
     
         closeNewCardSpan.addEventListener("click", (e)=>{
-            toggleModalDisplay(newCardModal);
+            newCardModal.style.display = "none";
                 newCardInner.style.transform = "" 
         })
         document.addEventListener("click", (e)=>{
@@ -287,8 +281,6 @@ const BackFlipFunction = (cardBack) => {
                 newCardInner.style.transform = ""
             }
         })
-    
-
     }
 
     newCardForm.addEventListener('submit', (e)=> {
@@ -323,6 +315,69 @@ const BackFlipFunction = (cardBack) => {
         })
     }
 
+    //******************************************SIGN UP STUFF******************************** */
+    const signUpCardFront = document.getElementById("sign-up-card-front");
+    const signUpModal = document.getElementById("sign-up-modal");
+    const closeSignUpSpan = document.getElementsByClassName("close")[2];
+    const signUpCardInner = document.getElementById("sign-up-card-inner");
+    const signUpForm = document.getElementById("sign-up-form")
+
+    signUpCardFront.addEventListener("click", (e)=>{
+        toggleModalDisplay(signUpModal);        
+    })
+
+    closeSignUpSpan.addEventListener("click", (e)=>{
+        toggleModalDisplay(signUpModal)
+        signUpCardInner.style.transform = "" 
+    })
+    document.addEventListener("click", (e)=>{
+        if(e.target == signUpModal){
+            signUpModal.style.display = "none"
+            signUpForm.reset(); 
+            signUpCardInner.style.transform = ""
+        }
+    })
+
+    signUpForm.addEventListener("submit", (e) => {
+        e.preventDefault()
+        console.log(e.target.username.value)
+        const userObj = {
+            username: e.target.username.value
+        }
+        const userConfig = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(userObj)
+        }
+        fetch(`${baseURL}users`, userConfig)
+        .then(resp => resp.json())
+        .then(user => {
+            if(user.username){
+                if (user.decks){
+                    user.decks.forEach(deck => { renderDeck(deck) });
+                }
+                loginButton.style.display = "none";
+                welcomeP.style.display = "inline-block";
+                welcomeP.innerHTML = `Hello ${user.username}!<br>What would you like to learn today?`;
+                toggleModalDisplay(signUpModal, signUpForm);
+                currentUserId = user.id;
+                cardContainer.innerHTML = ""
+            }
+            else{
+                alert(user[0])
+            }
+        })
+    })
+
+
+
+
+
+
+
 //***************************Modal Display Stuff********************/
 const toggleModalDisplay = (modal, form) => {
     if (modal.style.display === "block"){
@@ -352,16 +407,15 @@ const deleteCard = (button) => {
         fetch(`${baseURL}cards/${button.dataset.id}`, configDelete)
         .then(resp => resp.json())
         .then(emptyObj => { 
-            console.log("You did it, you crazy son of a bitch, you did it!")
             button.closest(".flip-card").remove()
         })
     }
 }
 // **********************EDIT CARD FUNCTION************************
-
+const editCardform = document.getElementById("edit-card-form");
+const editCardModal = document.getElementById("edit-card-modal");
 
 const editCardModalHandler = (form,id, oldCard) => { 
-       
     let editdOb = {
         "front_word": form.word.value,
         "back_definition": form.definition.value,
@@ -388,10 +442,22 @@ const editCardModalHandler = (form,id, oldCard) => {
         form.reset()
     })
 }
+
+const closeEditSpan = document.getElementById("close-edit")
+
+closeEditSpan.addEventListener("click", (e)=>{
+    toggleModalDisplay(editCardModal)
+    editCardform.reset()
+})
+document.addEventListener("click", (e)=>{
+    if(e.target == editCardModal){
+        editCardModal.style.display = "none"
+        editCardform.reset()
+    }
+})
+
     // Adds Flip functions to both back and front of cards
     cardFronts.forEach(FlipFunction)
     cardBacks.forEach(BackFlipFunction)
 // ********************END OF DOM CONTENT LOADED**************************
 })
-
-
