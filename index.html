@@ -67,9 +67,9 @@
                         </div>
                     </div>
                     <div class="flip-card">  
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <h1>SignUp</h1>
+                        <div id= "sign-up-card-inner" class="flip-card-inner">
+                            <div id="sign-up-card-front"class="flip-card-front">
+                                <h1>Sign Up</h1>
                             </div>
                             <div class="flip-card-back">
                             </div>
@@ -137,6 +137,21 @@
                 </form>
             </div>
         </div>
+
+        <!--*************************SIGNUP MODAL*****************************-->
+        <div id="sign-up-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header"><h2>Sign Up</h2><span class="close">&times;</span></div>
+                <form id="sign-up-form" class="new-item-form">
+                    <label for="username">Username:</label>
+                    <input name="username" type="text"><br>
+                    <input type="submit" value="Sign Up">
+                </form>
+            </div>
+        </div>
+
+
+
         <!-- **********************NEW-CARD-MODAL**************************** -->
         <div id="new-card-modal" class="modal">
             <div class="modal-content">

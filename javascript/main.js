@@ -174,6 +174,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
             welcomeP.style.display = "inline-block";
             welcomeP.innerHTML = `Hello ${user.username}!<br>What would you like to learn today?`;
             toggleModalDisplay(loginModal, loginForm);
+            cardContainer.innerHTML = "";
         })
     })
 
@@ -233,7 +234,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     
         const newCardFront = document.getElementById("new-card-front");
         const newCardModal = document.getElementById("new-card-modal");
-        const closeNewCardSpan = document.getElementsByClassName("close")[2];
+        const closeNewCardSpan = document.getElementsByClassName("close")[3];
         const newCardInner = document.getElementById("new-card-inner");
         FlipFunction(newCardFront)
         newCardFront.addEventListener("click", (e)=>{
@@ -241,7 +242,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
         })
     
         closeNewCardSpan.addEventListener("click", (e)=>{
-            toggleModalDisplay(newCardModal);
+            newCardModal.style.display = "none";
                 newCardInner.style.transform = "" 
         })
         document.addEventListener("click", (e)=>{
@@ -286,6 +287,65 @@ document.addEventListener("DOMContentLoaded", ()=> {
             form.reset()
         })
     }
+
+    //******************************************SIGN UP STUFF******************************** */
+    const signUpCardFront = document.getElementById("sign-up-card-front");
+    const signUpModal = document.getElementById("sign-up-modal");
+    const closeSignUpSpan = document.getElementsByClassName("close")[2];
+    const signUpCardInner = document.getElementById("sign-up-card-inner");
+    const signUpForm = document.getElementById("sign-up-form")
+
+    signUpCardFront.addEventListener("click", (e)=>{
+        toggleModalDisplay(signUpModal);        
+    })
+
+    closeSignUpSpan.addEventListener("click", (e)=>{
+        toggleModalDisplay(signUpModal)
+        signUpCardInner.style.transform = "" 
+    })
+    document.addEventListener("click", (e)=>{
+        if(e.target == signUpModal){
+            signUpModal.style.display = "none"
+            signUpForm.reset(); 
+            signUpCardInner.style.transform = ""
+        }
+    })
+
+    signUpForm.addEventListener("submit", (e) => {
+        e.preventDefault()
+        console.log(e.target.username.value)
+        const userObj = {
+            username: e.target.username.value
+        }
+        const userConfig = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(userObj)
+        }
+        fetch(`${baseURL}users`, userConfig)
+        .then(resp => resp.json())
+        .then(user => {
+            if(user.username){
+                if (user.decks){
+                    user.decks.forEach(deck => { renderDeck(deck) });
+                }
+                loginButton.style.display = "none";
+                welcomeP.style.display = "inline-block";
+                welcomeP.innerHTML = `Hello ${user.username}!<br>What would you like to learn today?`;
+                toggleModalDisplay(signUpModal, signUpForm);
+                currentUserId = user.id;
+                cardContainer.innerHTML = ""
+            }
+            else{
+                alert(user[0])
+            }
+        })
+    })
+
+
 // ********************END OF DOM CONTENT LOADED**************************
 })
 
@@ -339,7 +399,6 @@ const deleteCard = (button) => {
         fetch(`${baseURL}cards/${button.dataset.id}`, configDelete)
         .then(resp => resp.json())
         .then(emptyObj => { 
-            console.log("You did it, you crazy son of a bitch, you did it!")
             button.closest(".flip-card").remove()
         })
     }
