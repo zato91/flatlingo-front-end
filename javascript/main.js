@@ -43,24 +43,27 @@ document.addEventListener("DOMContentLoaded", ()=> {
         divDeck.addEventListener("click", (e) => {
             renderCards(deck)
             currentDeck = deck.id;
-             deckOptions(divDeck);
+            deckOptions(divDeck);
         })
     }
 
 
     function  deckOptions(divDeck){
         // console.dir(divDeck)
-        divDeckContainer.children.style.display = "none";
-        divDeck.style.display = "inline-block"
-        
-
+        let array = divDeckContainer.children;
+        for (let i=0; i < array.length; i++){
+            makeInvisible(array[i])
+        }
+        divDeck.style.display = "inline-block";
         let buttonBack = document.createElement('div');
         buttonBack.className = "button";
         buttonBack.innerText = "All Decks";
         divDeckContainer.append(buttonBack);
-       
-
     }
+
+    const makeInvisible = (element) => {
+            element.style.display = "none"
+        }
 
     // ************************** ADDS FETCH REQUEST TO CREATE NEW DECK ***************
     newDeckForm.addEventListener("submit", (e)=>{
