@@ -147,6 +147,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     const closeLoginSpan = document.getElementsByClassName("close")[1];
     const loginForm = document.getElementById("login-form");
     const welcomeP = document.getElementById("welcome");
+    const newCardForm = document.getElementById("new-card-form");
 
     loginButton.addEventListener("click", (e)=>{
         toggleModalDisplay(loginModal);       
@@ -199,9 +200,16 @@ document.addEventListener("DOMContentLoaded", ()=> {
         cardInner.appendChild(cardFront);
         const cardBack = document.createElement("div");
         cardBack.className = "flip-card-back";
-        cardBack.innerHTML = `<h1>${card.front_word}</h1>
+        
+        cardBack.innerHTML = `<div class="card-back-text"><h1>${card.front_word}</h1>
         <p>Definition: ${card.back_definition}</p>
-        <p>Notes: ${card.back_notes}</p>`
+        <p>Notes: ${card.back_notes}</p>
+        </div>
+        <div class="card-back-buttons">
+        <div data-id="${card.id}" data-function= "delete" class="button card-back-button">Delete</div>
+        <div data-id="${card.id}" data-function= "edit" class="button card-back-button">Edit</div>
+        </div>`
+
         cardInner.appendChild(cardBack);
         cardContainer.prepend(cardDiv);
         FlipFunction(cardFront);
@@ -226,7 +234,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
         const newCardFront = document.getElementById("new-card-front");
         const newCardModal = document.getElementById("new-card-modal");
         const closeNewCardSpan = document.getElementsByClassName("close")[2];
-        const newCardForm = document.getElementById("new-card-form");
         const newCardInner = document.getElementById("new-card-inner");
         FlipFunction(newCardFront)
         newCardFront.addEventListener("click", (e)=>{
@@ -245,11 +252,13 @@ document.addEventListener("DOMContentLoaded", ()=> {
             }
         })
     
-        newCardForm.addEventListener('submit', (e)=> {
-            e.preventDefault();
-            createCard(e.target);
-        })
+
     }
+
+    newCardForm.addEventListener('submit', (e)=> {
+        e.preventDefault();
+        createCard(e.target);
+    })
     
     function createCard(form){
         let cardOb = {
@@ -304,6 +313,34 @@ const FlipFunction = (cardFront) => {
 }
 const BackFlipFunction = (cardBack) => {
     cardBack.addEventListener("click", (e) => {
+        if (e.target.dataset.function === "delete"){
+            deleteCard(e.target)
+        }
+        else if (e.target.dataset.function === "edit"){
+            editCardModalHandler(e.target)
+        }
+        else{
         e.target.closest(".flip-card-inner").style.transform = "";
+        }
     })
+}
+
+const deleteCard = (button) => {
+    let result = confirm("Are you sure you want to delete this card?")
+    if(result){
+        const configDelete = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        } 
+        
+        fetch(`${baseURL}cards/${button.dataset.id}`, configDelete)
+        .then(resp => resp.json())
+        .then(emptyObj => { 
+            console.log("You did it, you crazy son of a bitch, you did it!")
+            button.closest(".flip-card").remove()
+        })
+    }
 }
