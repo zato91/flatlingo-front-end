@@ -1,15 +1,13 @@
 let currentUserId = 4
 const baseURL = "http://localhost:3000/"
 let currentDeck
+let currentCard
 document.addEventListener("DOMContentLoaded", ()=> {
     // ********************* CardFlipping ************************
     const cardFronts = document.querySelectorAll(".flip-card-front");
     const cardBacks = document.querySelectorAll(".flip-card-back");
     const cardContainer = document.querySelector(".card-container");
     const divDeckContainer = document.getElementById('deck-container');
-    // Adds Flip functions to both back and front of cards
-    cardFronts.forEach(FlipFunction)
-    cardBacks.forEach(BackFlipFunction)
 
     // *******************CREATE DECK MODAL***********************
     const createDeckButton = document.getElementById("create-deck-button");
@@ -82,6 +80,11 @@ document.addEventListener("DOMContentLoaded", ()=> {
             buttonBack.remove()
             cardContainer.innerHTML = ""
         })
+
+
+
+
+        
     }
 
     const toggleDeckContainerDisplay = (divDeck) => {
@@ -148,6 +151,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     const loginForm = document.getElementById("login-form");
     const welcomeP = document.getElementById("welcome");
     const newCardForm = document.getElementById("new-card-form");
+    
 
     loginButton.addEventListener("click", (e)=>{
         toggleModalDisplay(loginModal);       
@@ -176,7 +180,39 @@ document.addEventListener("DOMContentLoaded", ()=> {
             toggleModalDisplay(loginModal, loginForm);
         })
     })
+// **********************CardFlipFunctions************************
+const FlipFunction = (cardFront) => {
+    cardFront.addEventListener("click", (e) => {
+        //e.target.parentElement.style.transform = "rotateY(180deg)";
+        e.target.closest(".flip-card-inner").style.transform = "rotateY(180deg)";
+    })
+}
+const BackFlipFunction = (cardBack) => {
+    const editCardModal = document.getElementById("edit-card-modal");
+    
+    cardBack.addEventListener("click", (e) => {
+        const card = e.target.closest(".flip-card")
+        if (e.target.dataset.function === "delete"){
+            deleteCard(e.target)
+        }
+        else if (e.target.dataset.function === "edit"){
+            toggleModalDisplay(editCardModal)
+            currentCard = e.target.dataset.id
+            const editCardform = document.getElementById("edit-card-form");
 
+            editCardform.addEventListener('submit', (e) => {
+                e.preventDefault();
+                editCardModalHandler(e.target, currentCard, card)
+                toggleModalDisplay(editCardModal);
+            })
+            
+           
+        }
+        else{
+        e.target.closest(".flip-card-inner").style.transform = "";
+        }
+    })
+}
     // ********************** Render Cards Functions **************************************
     const renderCards = (deck) => {
         fetch(`${baseURL}decks/${deck.id}`)
@@ -286,10 +322,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
             form.reset()
         })
     }
-// ********************END OF DOM CONTENT LOADED**************************
-})
-
-
 
 //***************************Modal Display Stuff********************/
 const toggleModalDisplay = (modal, form) => {
@@ -304,27 +336,8 @@ const toggleModalDisplay = (modal, form) => {
     }
 }
 
-// **********************CardFlipFunctions************************
-const FlipFunction = (cardFront) => {
-    cardFront.addEventListener("click", (e) => {
-        //e.target.parentElement.style.transform = "rotateY(180deg)";
-        e.target.closest(".flip-card-inner").style.transform = "rotateY(180deg)";
-    })
-}
-const BackFlipFunction = (cardBack) => {
-    cardBack.addEventListener("click", (e) => {
-        if (e.target.dataset.function === "delete"){
-            deleteCard(e.target)
-        }
-        else if (e.target.dataset.function === "edit"){
-            editCardModalHandler(e.target)
-        }
-        else{
-        e.target.closest(".flip-card-inner").style.transform = "";
-        }
-    })
-}
 
+// **********************DELETE CARD FUNCTION************************
 const deleteCard = (button) => {
     let result = confirm("Are you sure you want to delete this card?")
     if(result){
@@ -344,3 +357,41 @@ const deleteCard = (button) => {
         })
     }
 }
+// **********************EDIT CARD FUNCTION************************
+
+
+const editCardModalHandler = (form,id, oldCard) => { 
+       
+    let editdOb = {
+        "front_word": form.word.value,
+        "back_definition": form.definition.value,
+        "back_notes": form.notes.value,
+        "understanding": false,
+        "understanding_num": 0,
+        "deck_id": currentDeck
+    }
+
+    const editMethod = {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(editdOb)
+    } 
+    
+    fetch(`${baseURL}cards/${id}`, editMethod)
+    .then(resp => resp.json())
+    .then(card => { 
+        oldCard.remove();
+        renderCard(card); 
+        form.reset()
+    })
+}
+    // Adds Flip functions to both back and front of cards
+    cardFronts.forEach(FlipFunction)
+    cardBacks.forEach(BackFlipFunction)
+// ********************END OF DOM CONTENT LOADED**************************
+})
+
+
