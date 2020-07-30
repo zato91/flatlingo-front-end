@@ -52,18 +52,21 @@ document.addEventListener("DOMContentLoaded", ()=> {
         // console.dir(divDeck)
         let array = divDeckContainer.children;
         for (let i=0; i < array.length; i++){
-            makeInvisible(array[i])
+            array[i].style.display = "none";
         }
         divDeck.style.display = "inline-block";
         let buttonBack = document.createElement('div');
         buttonBack.className = "button";
         buttonBack.innerText = "All Decks";
         divDeckContainer.append(buttonBack);
-    }
 
-    const makeInvisible = (element) => {
-            element.style.display = "none"
-        }
+        buttonBack.addEventListener("click", (e) => {
+            for (let i=0; i < array.length; i++){
+                array[i].style.display = "inline-block";
+            }
+            buttonBack.remove()
+        })
+    }
 
     // ************************** ADDS FETCH REQUEST TO CREATE NEW DECK ***************
     newDeckForm.addEventListener("submit", (e)=>{
