@@ -60,11 +60,60 @@ document.addEventListener("DOMContentLoaded", ()=> {
         buttonBack.innerText = "All Decks";
         divDeckContainer.append(buttonBack);
 
+        let deleteDeckButton = document.createElement('div');
+        deleteDeckButton.className = "button";
+        deleteDeckButton.innerText = "Delete Deck";
+        divDeckContainer.append(deleteDeckButton);
+
         buttonBack.addEventListener("click", (e) => {
             for (let i=0; i < array.length; i++){
                 array[i].style.display = "inline-block";
             }
+            buttonBack.remove();
+            deleteDeckButton.remove();
+        })
+
+
+
+        deleteDeckButton.addEventListener("click", (e) => {
+            // delete the deck, delete the deck button(which is divDeck that we have access to here),delete the deleteDeck button and make all of the rest of the buttons visible
+            deleteDeck(divDeck)
+            deleteDeckButton.remove()
             buttonBack.remove()
+            cardContainer.innerHTML = ""
+        })
+    }
+
+    const toggleDeckContainerDisplay = (divDeck) => {
+        let array = divDeckContainer.children;
+        for (let i=0; i < array.length; i++){
+            if (array[i].style.display === "none"){
+                array[i].style.display = "inline-block";
+            }
+            else{
+                array[i].style.display = "none";
+            }
+            
+            if (divDeck) {
+                divDeck.style.display = "inline-block"
+            }
+        }
+    }
+
+    const deleteDeck = (divDeck) => {
+        let deckConfig = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        }
+
+        fetch(`${baseURL}decks/${divDeck.dataset.id}`, deckConfig)
+        .then(resp => resp.json())
+        .then(emptyObj => {
+            divDeck.remove()
+            toggleDeckContainerDisplay()
         })
     }
 
@@ -180,7 +229,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
         const newCardForm = document.getElementById("new-card-form");
         const newCardInner = document.getElementById("new-card-inner");
         FlipFunction(newCardFront)
-    
         newCardFront.addEventListener("click", (e)=>{
             toggleModalDisplay(newCardModal);        
         })
@@ -191,7 +239,8 @@ document.addEventListener("DOMContentLoaded", ()=> {
         })
         document.addEventListener("click", (e)=>{
             if(e.target == newCardModal){
-                toggleModalDisplay(newCardModal, newCardForm); 
+                newCardModal.style.display = "none"
+                newCardForm.reset(); 
                 newCardInner.style.transform = ""
             }
         })
