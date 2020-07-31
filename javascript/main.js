@@ -49,7 +49,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
 
     function  deckOptions(divDeck){
-        // console.dir(divDeck)
         let array = divDeckContainer.children;
         for (let i=0; i < array.length; i++){
             array[i].style.display = "none";
@@ -211,7 +210,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
     }
 
     const renderUserOption = (user) => {
-        console.log(user.id, user.username)
         const option = document.createElement("option");
         option.value = user.id;
         option.dataset.name = user.name;
@@ -427,7 +425,6 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
     signUpForm.addEventListener("submit", (e) => {
         e.preventDefault()
-        console.log(e.target.username.value)
         const userObj = {
             username: e.target.username.value
         }
