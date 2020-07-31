@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     const createDeckModal = document.getElementById("create-deck-modal");
     const closeSpan = document.getElementsByClassName("close")[0];
     const newDeckForm = document.getElementById("new-deck-form");
+    const bottomContainer = document.getElementById("bottom-container")
 
     createDeckButton.addEventListener("click", (e)=>{
         toggleModalDisplay(createDeckModal);        
@@ -42,6 +43,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
             renderCards(deck)
             currentDeck = deck.id;
             deckOptions(divDeck);
+            bottomContainer.style.display = "none"
         })
     }
 
@@ -69,6 +71,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
             }
             buttonBack.remove();
             deleteDeckButton.remove();
+            bottomContainer.style.display = "block"
         })
 
 
@@ -79,6 +82,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
             deleteDeckButton.remove()
             buttonBack.remove()
             cardContainer.innerHTML = ""
+            bottomContainer.style.display = "block"
         })   
     }
 
@@ -173,6 +177,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
             welcomeP.innerHTML = `Hello ${user.username}!<br>What would you like to learn today?`;
             toggleModalDisplay(loginModal, loginForm);
             cardContainer.innerHTML = "";
+            bottomContainer.style.display = "block"  ;
         })
     })
     // **********************CardFlipFunctions************************
@@ -231,7 +236,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
         const cardBack = document.createElement("div");
         cardBack.className = "flip-card-back";
         
-        cardBack.innerHTML = `<div class="card-back-text"><h1>${card.front_word}</h1>
+        cardBack.innerHTML = `<div class="card-back-text"><h4>${card.front_word}</h4>
         <p>Definition: ${card.back_definition}</p>
         <p>Notes: ${card.back_notes}</p>
         </div>
@@ -254,7 +259,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
         divNewCard.innerHTML = `
             <div id="new-card-inner" class="flip-card-inner">
             <div id="new-card-front" class="flip-card-front">
-                    <h1>Create New Card</h1>
+                    <h1>Create<br>New Card</h1>
             </div>
                 <div id="new-card-back" class="flip-card-back">
                 </div>

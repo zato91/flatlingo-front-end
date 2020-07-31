@@ -74,19 +74,34 @@ html, body, section {
   font-weight: 700;
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 18px;
+  
+}
+
+#deck-container .button {
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+}
+
+#deck-container .button:hover {
+  border-left: 3px groove #361264;
+  border-right: 3px groove #361264;
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+
 }
 
 .button, input[type=submit] {
     width: 170px;
     padding-top: 12px;
-    padding-bottom: 9px;
+    padding-bottom: 12px;
     text-align: center;
     margin-top: 18px;
     font-weight: 600;
     font-family: 'Roboto Condensed', sans-serif;
-    /* border: 3px groove #f5d295;
-    background-color: #f5d295;
-    border-radius: 10px; */
+    
+    /* border-radius: 10px; */
     color: #361264;
     cursor: pointer;
     display: inline-block;
@@ -95,14 +110,16 @@ html, body, section {
   }
   
   .button:hover, input[type=submit]:hover {
+    border-left: 3px groove #361264;
     border-right: 3px groove #361264;
-    border-bottom: 3px groove #361264;
-    margin-right: 0px;
-    margin-bottom: 0px;
 
-    /* box-shadow: 0 0 10px 0 #7300d7 inset, 0 0 20px 2px #7300d7;
-    border: 3px solid #3a016c; */
   }
+
+  .flip-card-back .button:hover {
+    border-style: none;
+    color: #b38639;
+  }
+
 
 
 
@@ -114,12 +131,12 @@ html, body, section {
 #bottom-container {
     height: 15%;
     text-align: center;
+    display: none;
 }
 
 
 #right-container {
     flex: 1;
-    background-image: url(images/mainbackground.png);
     overflow-y: scroll;
     padding: 1em;
     background-color: #c28e3731;
@@ -205,6 +222,10 @@ html, body, section {
   margin-bottom: 0px;
 }
 
+.card-back-text {
+  overflow: scroll;
+}
+
 /***************************************** MODAL STYLING *****************************************/
 
 /* The Modal (background) */
@@ -229,7 +250,7 @@ html, body, section {
 
   background-color: #ece4d4;
   
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 10% auto; /* 15% from the top and centered */
   border: 2px groove #674b8b;
   border-radius: 5px;
   width: 20%;
@@ -277,11 +298,7 @@ html, body, section {
   font-size: 18px;
   line-height: 20px;
   text-align: center;
-  /* height: 100%; */
-
 }
-
-
 
 input[type=text] {
   padding: 5px;
@@ -289,7 +306,6 @@ input[type=text] {
   margin: 8px 0;
   box-sizing: border-box;
   border-radius: 4px;
-  border: 1px groove #674b8b;
   font-family: 'Roboto', sans-serif;
   color: #361264;
   background-color: #f8dcac;
