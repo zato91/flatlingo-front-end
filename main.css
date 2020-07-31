@@ -223,12 +223,19 @@ html, body, section {
 
 /* Modal Content/Box */
 .modal-content {
-  background-color: #faebd1;
+  background-image: url(images/imageedit_12_5643738717.png);
+  background-position: 47%30%;
+  
+
+  background-color: #ece4d4;
+  
   margin: 15% auto; /* 15% from the top and centered */
   border: 2px groove #674b8b;
   border-radius: 5px;
-  width: 30%; /* Could be more or less, depending on screen size */
+  width: 20%;
+  height: 50%; /* Could be more or less, depending on screen size */
 }
+
 
 /* The Close Button */
 .close {
@@ -249,8 +256,9 @@ html, body, section {
   cursor: pointer;
 }
 
+
 .modal-header {
-  background-color: #674b8b;
+  background-color: #dcdce4;
   text-align: center;
 
 }
@@ -269,13 +277,15 @@ html, body, section {
   font-size: 18px;
   line-height: 20px;
   text-align: center;
+  /* height: 100%; */
+
 }
 
 
 
 input[type=text] {
   padding: 5px;
-  width: 75%;
+  /* width: 75%; */
   margin: 8px 0;
   box-sizing: border-box;
   border-radius: 4px;
