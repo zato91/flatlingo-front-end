@@ -1,4 +1,4 @@
-let currentUserId = 4
+let currentUserId
 const baseURL = "http://localhost:3000/"
 let currentDeck
 let currentCard
@@ -65,12 +65,18 @@ document.addEventListener("DOMContentLoaded", ()=> {
         deleteDeckButton.innerText = "Delete Deck";
         divDeckContainer.append(deleteDeckButton);
 
+        let shareDeckButton = document.createElement('div');
+        shareDeckButton.className = "button";
+        shareDeckButton.innerText = "Share Deck";
+        divDeckContainer.append(shareDeckButton);
+
         buttonBack.addEventListener("click", (e) => {
             for (let i=0; i < array.length; i++){
                 array[i].style.display = "inline-block";
             }
             buttonBack.remove();
             deleteDeckButton.remove();
+            shareDeckButton.remove()
             bottomContainer.style.display = "block"
         })
 
@@ -83,7 +89,12 @@ document.addEventListener("DOMContentLoaded", ()=> {
             buttonBack.remove()
             cardContainer.innerHTML = ""
             bottomContainer.style.display = "block"
-        })   
+            shareDeckButton.remove()
+        })
+        
+        shareDeckButton.addEventListener("click", (e) => {
+            shareDeckHandler(divDeck)
+        })
     }
 
     const toggleDeckContainerDisplay = (divDeck) => {
@@ -103,12 +114,17 @@ document.addEventListener("DOMContentLoaded", ()=> {
     }
 
     const deleteDeck = (divDeck) => {
+        const deckObj = {
+            user_id: parseInt(currentUserId, 10)
+        }
+
         let deckConfig = {
-            method: "DELETE",
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
-            }
+            },
+            body: JSON.stringify(deckObj)
         }
 
         fetch(`${baseURL}decks/${divDeck.dataset.id}`, deckConfig)
@@ -180,6 +196,72 @@ document.addEventListener("DOMContentLoaded", ()=> {
             bottomContainer.style.display = "block"  ;
         })
     })
+    //**********************************SHARE DECK MODAL STUFF *************************/
+    const shareDeckModal = document.getElementById("share-deck-modal");
+    const shareDeckSpan = document.getElementById("share-deck-span");
+    const shareDeckForm = document.getElementById("share-deck-form");
+    const shareDeckSelect = document.getElementById("users-select");
+
+    const populateShareDeckForm = () => {
+        fetch(`${baseURL}users`)
+        .then(resp => resp.json())
+        .then(users => {
+            users.forEach(renderUserOption)
+        })
+    }
+
+    const renderUserOption = (user) => {
+        console.log(user.id, user.username)
+        const option = document.createElement("option");
+        option.value = user.id;
+        option.dataset.name = user.name;
+        option.innerText = user.username;
+        shareDeckSelect.appendChild(option)
+    }
+
+    populateShareDeckForm()
+
+    const shareDeckHandler = (div) => {
+        toggleModalDisplay(shareDeckModal)
+    }
+
+    document.addEventListener("click", (e) => {
+        if (e.target === shareDeckModal){
+            toggleModalDisplay(shareDeckModal, shareDeckForm)
+        }
+    })
+
+    shareDeckSpan.addEventListener("click", (e) => {
+        toggleModalDisplay(shareDeckModal, shareDeckForm)
+    })
+
+    shareDeckForm.addEventListener("submit", (e) =>{
+        e.preventDefault()
+        const userDeckObj = {
+            user_id: parseInt(e.target.users.value, 10),
+            deck_id: currentDeck
+        }
+        const configUserDeck = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(userDeckObj)
+        }
+
+        fetch(`${baseURL}user_decks`, configUserDeck)
+        .then(resp => resp.json())
+        .then(message => {
+            alert(message.message)
+            toggleModalDisplay(shareDeckModal)
+        })
+    })
+
+
+
+
+
     // **********************CardFlipFunctions************************
     const FlipFunction = (cardFront) => {
         cardFront.addEventListener("click", (e) => {
@@ -370,6 +452,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
                 toggleModalDisplay(signUpModal, signUpForm);
                 currentUserId = user.id;
                 cardContainer.innerHTML = ""
+                bottomContainer.style.display = "block"
             }
             else{
                 alert(user[0])
