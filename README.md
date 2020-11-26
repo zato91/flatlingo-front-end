@@ -12,7 +12,7 @@
 > A educational application that incorporates flip cards as a means to practice studying with a question and answer component. Engineered with Javascript for the frontend alongside a Rails API for the backend.
 
 ### 🏠 [Homepage](https://github.com/zato91/flatlingo-front-end)
-Back End repository: https://github.com/zato91/flatlingo-front-end
+Back End repository: https://github.com/andy-aguilar/flatlingo-backend
 
 ## Install
 
@@ -31,7 +31,7 @@ npm run start or yarn start
 👨‍💻 **Zara**
 
 * Github: [@zato91](https://github.com/zato91)
-* LinkedIn: ----------------------------------
+* LinkedIn: https://www.linkedin.com/in/zara-ahmadi/
 
 ## Show your support
 
